@@ -1,0 +1,39 @@
+Patron:
+  1 Listen to music you like
+    - Discover new music
+  2 Be recognised for your taste in music
+  - (Discover other like minded people)
+
+Venue:
+  - Promote your venue
+  - Discover new artists
+  - Segmentation
+  - Provide a tailored experience for returning customers
+
+Other people:
+  - Take the party home
+  - Discover bars you might like
+
+
+1. As a Patron I want to listen to music I like
+  - Stream music
+  - Vote for music
+    - See what's coming up?
+  - Suggest music
+  - (Radio for when nobody suggests anything)
+
+2. As a Patron I want to be recognised for my taste in music
+  - Display of top "tastemakers" (segmented somehow)
+
+
+Stories:
+  - As a Patron
+    - I want to be able to listen to a track
+    - I want to be able to select a track
+      - Given I'm on the page for "Some Venue"
+      - When I type "Start Wearing Purple" in the "Next Track" text input
+      - And I click "Play"
+      - Then I should hear "Start Wearing Purple"
+    - I want to be able to queue up several tracks
+    - I want to be able to make my desired tracks play (upvote)
+    - I want to hear something when nobody suggests music
