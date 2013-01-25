@@ -1,6 +1,7 @@
-class PlacementsController
+class PlacementsController < ApplicationController
 
   def new
+    @playlist = Playlist.find(params[:playlist_id])
     @placement = Placement.new
   end
 
