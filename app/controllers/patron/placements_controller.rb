@@ -6,8 +6,12 @@ class Patron::PlacementsController < PatronController
   end
 
   def create
+
     placement = Playlist.find(params[:playlist_id]).placements.new(params[:placement])
     placement.save!
+
+    render nothing: true
+
   end
 
   def upvote
