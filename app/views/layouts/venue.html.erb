@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LeanBar</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <script src="//connect.soundcloud.com/sdk.js"></script>
+  <%= javascript_include_tag "venue" %>
+  <%= csrf_meta_tags %>
+</head>
+<body ng-app="vp.venue.module">
+
+<div class="container">
+  <div class="navbar">
+    <div class="navbar-inner">
+
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="#">Vox Popular</a>
+    </div>
+  </div>
+
+  <%= yield %>
+
+</div>
+
+</body>
+</html>
