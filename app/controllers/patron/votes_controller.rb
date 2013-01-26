@@ -7,7 +7,6 @@ class Patron::VotesController < PatronController
 
   end
 
-
   def create
 
     vote = Placement.find(params[:placement_id]).votes.new(params[:vote])
