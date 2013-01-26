@@ -23,8 +23,6 @@ JSON API
             ]
         }
 
-
-
     /patron/events/:id/playlists/placements/:new            - suggest track
         POST
         {
