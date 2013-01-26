@@ -5,6 +5,11 @@ class Venue::PlacementsController < VenueController
     @placement.update_attributes(params[:placement])
   end
 
+  def show
+    @playlist = Playlist.find(params[:playlist_id])
+    @placement = Placement.find(params[:id])
+  end
+
   def start_playing_track
     placement = Placement.find(params[:id])
     placement.start_playing_transition

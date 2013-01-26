@@ -10,4 +10,20 @@ class Patron::PlacementsController < PatronController
     placement.save!
   end
 
+  def upvote
+    vote = Placement.find(params[:id]).vote.new
+    vote.patron = Patron.find(session[:patron_id])
+    vote.value = 1
+
+    vote.save!
+  end
+
+  def dismiss
+    vote = Placement.find(params[:id]).vote.new
+    vote.patron = Patron.find(session[:patron_id])
+    vote.value = 0
+
+    vote.save!
+  end
+
 end

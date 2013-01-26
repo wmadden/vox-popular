@@ -1,0 +1,5 @@
+{
+        playlist_id: @playlist.id,
+        soundcloud_track_id: @playlist.now_playing.track.sc_track_id,
+        id: @playlist.now_playing.track.id
+}
