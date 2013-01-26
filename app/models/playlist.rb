@@ -1,13 +1,6 @@
 class Playlist < ActiveRecord::Base
 
   has_many :placements
-
-  def currently_playing
-
-  end
-
-  def next
-
-  end
+  belongs_to :now_playing, :class_name => :placement
 
 end
