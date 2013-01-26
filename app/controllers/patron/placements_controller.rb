@@ -15,19 +15,23 @@ class Patron::PlacementsController < PatronController
   end
 
   def upvote
-    vote = Placement.find(params[:id]).vote.new
+    vote = Placement.find(params[:id]).votes.new
     vote.patron = Patron.find(session[:patron_id])
     vote.value = 1
 
     vote.save!
+
+    render nothing: true
   end
 
   def dismiss
-    vote = Placement.find(params[:id]).vote.new
+    vote = Placement.find(params[:id]).votes.new
     vote.patron = Patron.find(session[:patron_id])
     vote.value = 0
 
     vote.save!
+
+    render nothing: true
   end
 
 end

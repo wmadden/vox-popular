@@ -2,7 +2,12 @@ LeanBar::Application.routes.draw do
 
   namespace :patron do
     resources :playlists do
-      resources :placements
+      resources :placements do
+        member do
+          post :upvote
+          post :dismiss
+        end
+      end
     end
   end
 
@@ -11,8 +16,6 @@ LeanBar::Application.routes.draw do
     resources :playlists do
 
       resources :placements do
-
-        resources :votes
 
         member do
           put :start_playing_track

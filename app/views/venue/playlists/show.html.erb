@@ -1,27 +1,32 @@
 <h2>Event <%= params[:id] %></h2>
 <script src="//connect.soundcloud.com/sdk.js"></script>
 
-<div ng-controller="vp.venue.Player">
+<div ng-app ng-init="playlist_id = '<%= @playlist.id %>';">
+  <div ng-controller="vp.venue.Player">
 
-  <div class="currently-playing-track">
-    <p class="label">Now playing:</p>
-    <p>{{playlist.now_playing.track.title}}</p>
-    <p>{{playlist.now_playing.track.user.username}}</p>
-    <button class="play" ng-click="play()">Play</button>
-    <button class="stop" ng-click="stop()">Stop</button>
+    <div class="currently-playing-track">
+      <p class="label">Now playing:</p>
+
+      <p>{{playlist.now_playing.track.title}}</p>
+
+      <p>{{playlist.now_playing.track.user.username}}</p>
+      <button class="play" ng-click="play()">Play</button>
+      <button class="stop" ng-click="stop()">Stop</button>
+      <button class="next" ng-click="next()">Next</button>
+    </div>
+
+    <div class="upcoming-tracks">
+      <p class="label">Upcoming:</p>
+      <table class="table table-striped table-bordered">
+        <tbody>
+        <tr ng-repeat="placement in playlist.upcoming_placements">
+          <td>
+            {{ placement.track.title }} ({{ placement.track.user.username }})
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
-
-  <div class="upcoming-tracks">
-    <p class="label">Upcoming:</p>
-    <table class="table table-striped table-bordered">
-      <tbody>
-      <tr ng-repeat="placement in playlist.upcoming_placements">
-        <td>
-          {{ placement.track.title }} ({{ placement.track.user.username }})
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-
 </div>

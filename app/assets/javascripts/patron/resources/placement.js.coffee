@@ -1,19 +1,19 @@
-vp.venue.module
+vp.patron.module
     .factory('PlacementResource', ['$resource', ($resource) ->
         resource = $resource(
-            '/venue/playlists/:playlist_id/placements/:id/:action',
+            '/patron/playlists/:playlist_id/placements/:id/:action',
             { playlist_id: '@playlist_id', id: '@id' },
             {
-                putPlayStarted: {
-                    method: 'PUT',
+                upvote: {
+                    method: 'POST',
                     params: {
-                        action: 'start_playing_track'
+                        action: 'upvote'
                     }
                 }
-                putPlayFinished: {
-                    method: 'PUT',
+                dismiss: {
+                    method: 'POST',
                     params: {
-                        action: 'finish_playing_track'
+                        action: 'dismiss'
                     }
                 }
             }

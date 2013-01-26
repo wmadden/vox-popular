@@ -10,7 +10,7 @@ class vp.venue.Player
         getPlaylist = =>
             deferred = $.Deferred()
             $scope.playlist = PlaylistResource.get(
-                { id: 1 },
+                { id: $scope.playlist_id },
                 (args...) ->
                     deferred.resolve(args...)
 
@@ -63,11 +63,7 @@ class vp.venue.Player
                     {
                         onload: ->
                             this.onPosition(this.duration, (eventPosition) ->
-                                $scope.playlist.now_playing.state = 'stopped'
-                                $scope.playlist.now_playing.$putPlayFinished()
-                                getPlaylist().done( ->
-                                    $scope.play()
-                                )
+                                $scope.next()
                             )
                     },
                     (track) =>
@@ -77,6 +73,14 @@ class vp.venue.Player
 
             stop: ->
                 $scope.playlist.now_playing.soundcloudTrack.stop()
+
+            next: ->
+                $scope.playlist.now_playing.state = 'stopped'
+                $scope.playlist.now_playing.$putPlayFinished()
+                getPlaylist().done( ->
+                    $scope.play()
+                )
+
         })
 
         getPlaylist()
