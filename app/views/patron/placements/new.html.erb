@@ -1,0 +1,19 @@
+<h2>New Placement</h2>
+
+<div ng-controller="vp.patron.SuggestTrack">
+
+  <input type="text" name="search" class="track-search" autocomplete="off"
+         ng-model="searchQuery"
+         ng-change="findTracks(searchQuery)" />
+
+  <table class="table table-striped table-bordered">
+    <tbody>
+    <tr ng-repeat="track in tracks">
+      <td ng-click="chooseTrack(track)">
+        {{ track.title }} ({{ track.user.username }})
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
