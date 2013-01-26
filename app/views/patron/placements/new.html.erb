@@ -18,7 +18,7 @@
 
 </div>
 
-<%= semantic_form_for([@playlist,@placement]) do |f| %>
+<%= semantic_form_for([:patron, @playlist,@placement]) do |f| %>
     <%= f.inputs do %>
         <%= f.input :track_id %>
     <% end %>
