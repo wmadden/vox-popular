@@ -17,3 +17,13 @@
   </table>
 
 </div>
+
+<%= semantic_form_for([@playlist,@placement]) do |f| %>
+    <%= f.inputs do %>
+        <%= f.input :track_id %>
+    <% end %>
+
+    <%= f.actions do %>
+        <%= f.action :submit, button_html: { class: 'btn btn-primary' } %>
+    <% end %>
+<% end %>

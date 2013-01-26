@@ -1,7 +1,16 @@
 LeanBar::Application.routes.draw do
 
-  resources :playlists do
-    resources :placements
+  namespace :patron do
+    resources :playlists do
+      resources :placements
+    end
+  end
+
+
+  namespace :venue do
+    resources :playlists do
+      resources :placements
+    end
   end
 
 end
