@@ -5,4 +5,7 @@ class Vote < ActiveRecord::Base
 
   attr_accessible :value
 
+  validates :patron, presence: true
+  validates :placement, presence: true
+
 end

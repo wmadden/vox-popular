@@ -5,10 +5,13 @@ result = {
     unvoted_placements: @unvoted_placements.map do |placement|
       {
           soundcloud_track_id: placement.track.sc_track_id,
-          id:                  placement.track.id,
-          playlist_id:         @playlist.id
+          id:                  placement.id,
+          playlist_id:         @playlist.id,
+          votes: placement.votes
       }
-    end
+    end,
+
+    patron: @patron
 
 }
 

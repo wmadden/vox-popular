@@ -11,17 +11,19 @@ class Venue::PlacementsController < VenueController
   end
 
   def start_playing_track
-    placement = Placement.find(params[:id])
-    placement.start_playing_transition
-    placement.save!
+    @playlist = Playlist.find(params[:playlist_id])
+    @placement = @playlist.placements.find(params[:id])
+    @placement.start_playing_transition
+    @placement.save!
 
     render :show
   end
 
   def finish_playing_track
-    placement = Placement.find(params[:id])
-    placement.stop_playing_transition
-    placement.save!
+    @playlist = Playlist.find(params[:playlist_id])
+    @placement = @playlist.placements.find(params[:id])
+    @placement.stop_playing_transition
+    @placement.save!
 
     render :show
   end
