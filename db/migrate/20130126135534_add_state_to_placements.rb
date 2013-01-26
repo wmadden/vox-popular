@@ -1,5 +1,5 @@
 class AddStateToPlacements < ActiveRecord::Migration
   def change
-    add_column :playlists, :state, :string
+    add_column :placement, :state, :string
   end
 end
