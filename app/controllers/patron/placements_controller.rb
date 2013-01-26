@@ -16,6 +16,9 @@ class Patron::PlacementsController < PatronController
     vote.value = 1
 
     vote.save!
+
+    #should remove from list
+
   end
 
   def dismiss
@@ -24,6 +27,9 @@ class Patron::PlacementsController < PatronController
     vote.value = 0
 
     vote.save!
+
+    #should remove from list
+
   end
 
 end
