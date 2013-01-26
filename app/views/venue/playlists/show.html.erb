@@ -5,8 +5,8 @@
 
   <div class="currently-playing-track">
     <p class="label">Now playing:</p>
-    <p>{{playlist.currently_playing_track.title}}</p>
-    <p>{{playlist.currently_playing_track.user.username}}</p>
+    <p>{{playlist.now_playing.title}}</p>
+    <p>{{playlist.now_playing.user.username}}</p>
     <button class="play" ng-click="play()">Play</button>
     <button class="stop" ng-click="stop()">Stop</button>
   </div>
@@ -15,9 +15,9 @@
     <p class="label">Upcoming:</p>
     <table class="table table-striped table-bordered">
       <tbody>
-      <tr ng-repeat="track in playlist.upcoming_placements">
-        <td ng-click="chooseTrack(track)">
-          {{ track.title }} ({{ track.user.username }})
+      <tr ng-repeat="placement in playlist.upcoming_placements">
+        <td>
+          {{ placement.title }} ({{ placement.user.username }})
         </td>
       </tr>
       </tbody>
