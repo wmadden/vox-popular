@@ -9,9 +9,18 @@ LeanBar::Application.routes.draw do
 
   namespace :venue do
     resources :playlists do
+
       resources :placements do
+
         resources :votes
+
+        member do
+          put :start_playing_track
+          put :stop_playing_track
+        end
+
       end
+      
     end
   end
 
