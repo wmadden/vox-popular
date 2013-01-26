@@ -1,4 +1,4 @@
-class PlacementsController < ApplicationController
+class Venue::PlacementsController < VenueController
 
   def update
 
