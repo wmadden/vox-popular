@@ -2,7 +2,7 @@ class Patron::PlacementsController < PatronController
 
   def new
     @playlist = Playlist.find(params[:playlist_id])
-    @placement = Placement.new
+    @placement = @playlist.placements.new
   end
 
   def create
