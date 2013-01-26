@@ -1,7 +1,7 @@
 namespace 'vp.patron'
 
 class vp.patron.SuggestTrack
-    constructor: ($scope, SoundCloud) ->
+    constructor: ($scope, SoundCloud, PlacementResource) ->
         _.extend($scope, {
             findTracks: (query) =>
                 SoundCloud.get('/tracks', { q: query }, (tracks) =>
@@ -11,7 +11,14 @@ class vp.patron.SuggestTrack
                 )
 
             chooseTrack: (track) =>
-                console.log("Chose track", track)
+                PlacementResource.create({
+                    playlist_id: $scope.playlist_id
+                    placement: {
+                        track_attributes: {
+                            sc_track_id: track.id
+                        }
+                    }
+                })
         })
 
-vp.patron.SuggestTrack.$inject = ['$scope', 'SoundCloud']
+vp.patron.SuggestTrack.$inject = ['$scope', 'SoundCloud', 'PlacementResource']

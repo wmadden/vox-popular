@@ -1,18 +1,25 @@
-{
-    now_playing: {
+result = {
 
-        playlist_id: @playlist.id,
-        soundcloud_track_id: @playlist.now_playing.track.sc_track_id,
-        id: @playlist.now_playing.track.id
-
-    },
+    id: @playlist.id,
 
     unvoted_placements: @unvoted_placements.map do |placement|
       {
-        soundcloud_track_id: placement.track.sc_track_id,
-        id: placement.track.id,
-        playlist_id: @playlist.id
+          soundcloud_track_id: placement.track.sc_track_id,
+          id:                  placement.track.id,
+          playlist_id:         @playlist.id
       }
     end
 
 }
+
+if @playlist.now_playing
+  result[:now_playing] = {
+
+      playlist_id:         @playlist.id,
+      soundcloud_track_id: @playlist.now_playing.track.sc_track_id,
+      id:                  @playlist.now_playing.track.id
+
+  }
+end
+
+result
