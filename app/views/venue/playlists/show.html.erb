@@ -1,0 +1,11 @@
+<h2>Event <%= params[:id] %></h2>
+<script src="//connect.soundcloud.com/sdk.js"></script>
+
+<div ng-controller="vp.venue.Player">
+
+  <p>Now playing: {{currentTrack.title}}</p>
+
+  <input type="text" name="search" class="track-search" autocomplete="off" />
+  <button class="play" ng-click="playSelectedTrack()">Play</button>
+
+</div>
