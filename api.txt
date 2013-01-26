@@ -1,0 +1,53 @@
+
+JSON API
+    /patron/events/:id/playlists/:id                        - show playlist
+        GET
+        {
+            name:
+            currently_playing_track: {
+                soundcloud_track_id: 55952449
+            }
+
+            # Should include all unplayed tracks that have not been voted for by the
+            # current patron
+            unvoted_placements: [
+                {
+                    soundcloud_track_id: 
+                }
+            ]
+
+            upcoming_placements: [
+                {
+                    soundcloud_track_id: 
+                }
+            ]
+        }
+    /patron/events/:id/playlists/placements/:new            - suggest track
+        POST
+        {
+            soundcloud_track_id:
+        }
+    /patron/events/:id/playlists/placements/:id/votes       - new vote
+        POST
+        {
+            value: 1 | 0 ?
+        }
+    /patron/events/:id/playlists/placements/:id/ratings     - rate a track
+        POST
+        {
+            value: (0 - 5)
+        }
+        # Should reject if rating already exists for patron on track
+        # or if track is not currently playing
+
+    /venue/events/:id/playlists/:id/placements/:id
+        PUT
+        {
+            started_playing_at:
+            finished_playing_at:
+        }
+
+VIEWS
+    /patron/events/:id/playlists/:id                        - patron playlist viewer
+        - Should generate a UUID for the viewer and store it in the session
+    /venue/events/:id/playlists/:id/player                  - venue playlist player
