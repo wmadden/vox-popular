@@ -28,17 +28,23 @@ JSON API
     /patron/events/:id/playlists/placements/:new            - suggest track
         POST
         {
-            soundcloud_track_id:
+            placement: {
+                soundcloud_track_id:
+            }
         }
     /patron/events/:id/playlists/placements/:id/votes       - new vote
         POST
         {
-            value: 1 | 0 ?
+            vote: {
+                value: 1 | 0 ?
+            }   
         }
     /patron/events/:id/playlists/placements/:id/ratings     - rate a track
         POST
         {
-            value: (0 - 5)
+            rating: {
+                value: (0 - 5)
+            }   
         }
         # Should reject if rating already exists for patron on track
         # or if track is not currently playing
@@ -46,8 +52,10 @@ JSON API
     /venue/events/:id/playlists/:id/placements/:id
         PUT
         {
-            started_playing_at:
-            finished_playing_at:
+            placement: {
+                started_playing_at:
+                finished_playing_at:
+            }
         }
 
 VIEWS
