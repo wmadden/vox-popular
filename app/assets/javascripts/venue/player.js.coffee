@@ -3,9 +3,6 @@ namespace 'vp.venue'
 class vp.venue.Player
     constructor: ($scope, $http, SoundCloud, PlaylistResource, PlacementResource) ->
 
-#        $scope.latestAttentionRequest = AttentionRequestResource.get({ id: 'latest' }, (-> updateState()),
-#        (-> updateState()))
-
         updateView = ->
             if !$scope.$$phase
                 $scope.$digest()
@@ -23,7 +20,6 @@ class vp.venue.Player
                         { soundcloud_track_id: 1917917, url: "/venue/playlists/1/placements/4" }
                     ]
 
-                    $scope.playlist.now_playing.url = "/venue/playlists/1/placements/1"
                     $scope.playlist.now_playing = new PlacementResource($scope.playlist.now_playing)
                     expandTrack($scope.playlist.now_playing).done(updateView)
 
@@ -39,10 +35,10 @@ class vp.venue.Player
             )
             deferred.promise()
 
-        expandTrack = (track) ->
-            getTrack(track.soundcloud_track_id)
+        expandTrack = (placement) ->
+            getTrack(placement.soundcloud_track_id)
                 .done( (info) =>
-                    _.extend(track, info)
+                    placement.track = info
                 )
 
         getTrack = (id) =>
@@ -60,15 +56,15 @@ class vp.venue.Player
 
             play: ->
                 $scope.playlist.now_playing.state = 'playing'
-                $scope.playlist.now_playing.$update()
+                $scope.playlist.now_playing.$putPlayStarted()
 
                 SoundCloud.stream(
                     '/tracks/' + $scope.playlist.now_playing.soundcloud_track_id,
                     {
                         onload: ->
                             this.onPosition(this.duration, (eventPosition) ->
-                                $scope.playlist.now_playing.finished_playing_at ?= new Date()
-                                $scope.playlist.now_playing.$update()
+                                $scope.playlist.now_playing.state = 'stopped'
+                                $scope.playlist.now_playing.$putPlayFinished()
                                 getPlaylist().done( ->
                                     $scope.play()
                                 )
