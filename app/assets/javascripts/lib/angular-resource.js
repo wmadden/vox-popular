@@ -383,7 +383,7 @@ angular.module('ngResource', ['ng']).
           }
 
           var value = this instanceof Resource ? this : (action.isArray ? [] : new Resource(data));
-          var url = this.url ? this.url : route.url(extend({}, extractParams(data, action.params || {}), params));
+          var url = route.url(extend({}, extractParams(data, action.params || {}), params));
           $http({
             method: action.method,
             url: url,
