@@ -13,7 +13,7 @@ vp.venue.module
                 putPlayFinished: {
                     method: 'PUT',
                     params: {
-                        action: 'finished_playing_track'
+                        action: 'finish_playing_track'
                     }
                 }
             }
