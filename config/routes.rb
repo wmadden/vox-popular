@@ -16,11 +16,11 @@ LeanBar::Application.routes.draw do
 
         member do
           put :start_playing_track
-          put :stop_playing_track
+          put :finish_playing_track
         end
 
       end
-      
+
     end
   end
 

@@ -5,7 +5,7 @@ class Venue::PlacementsController < VenueController
     @placement.update_attributes(params[:placement])
   end
 
-  def play_track
+  def start_playing_track
     placement = Placement.find(params[:id])
     placement.start_playing_transition
     placement.save!
@@ -13,7 +13,7 @@ class Venue::PlacementsController < VenueController
     render :show
   end
 
-  def stop_track
+  def finish_playing_track
     placement = Placement.find(params[:id])
     placement.stop_playing_transition
     placement.save!

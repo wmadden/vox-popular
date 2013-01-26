@@ -34,7 +34,7 @@ class Placement < ActiveRecord::Base
     end
 
     def progress_playlist
-
+      playlist.progress
     end
 
   end
