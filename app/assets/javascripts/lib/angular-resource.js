@@ -218,7 +218,8 @@ angular.module('ngResource', ['ng']).
   factory('$resource', ['$http', '$parse', function($http, $parse) {
     var DEFAULT_ACTIONS = {
       'get':    {method:'GET'},
-      'save':   {method:'POST'},
+      'create': {method:'POST'},
+      'update': {method:'PUT'},
       'query':  {method:'GET', isArray:true},
       'remove': {method:'DELETE'},
       'delete': {method:'DELETE'}
@@ -382,9 +383,10 @@ angular.module('ngResource', ['ng']).
           }
 
           var value = this instanceof Resource ? this : (action.isArray ? [] : new Resource(data));
+          var url = this.url ? this.url : route.url(extend({}, extractParams(data, action.params || {}), params));
           $http({
             method: action.method,
-            url: route.url(extend({}, extractParams(data, action.params || {}), params)),
+            url: url,
             data: data
           }).then(function(response) {
               var data = response.data;
@@ -427,7 +429,7 @@ angular.module('ngResource', ['ng']).
             throw "Expected between 1-3 arguments [params, success, error], got " +
               arguments.length + " arguments.";
           }
-          var data = hasBody ? this : undefined;
+          var data = hasBody ? (this.data && isFunction(this.data) ? this.data() : this) : undefined;
           Resource[name].call(this, params, data, success, error);
         };
       });
