@@ -4,7 +4,7 @@ module ApplicationHelper
         soundcloud_track_id: placement.track.sc_track_id,
         id:                  placement.id,
         playlist_id:         playlist.id,
-        votes:               placement.votes
+        score:               placement.vote_sum
     }
   end
 end

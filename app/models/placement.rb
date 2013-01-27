@@ -36,10 +36,10 @@ class Placement < ActiveRecord::Base
       super()
     end
 
-    def progress_playlist
-      playlist.progress
-    end
+  end
 
+  def progress_playlist
+    playlist.progress
   end
 
   def vote_sum

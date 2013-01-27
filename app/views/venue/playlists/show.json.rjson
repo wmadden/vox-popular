@@ -2,7 +2,7 @@ result = {
 
     id: @playlist.id,
 
-    upcoming_placements: @playlist.placements.map do |placement|
+    upcoming_placements: @upcoming_placements.map do |placement|
       render_placement(placement, @playlist)
     end
 

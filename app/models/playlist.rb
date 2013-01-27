@@ -4,21 +4,20 @@ class Playlist < ActiveRecord::Base
   belongs_to :now_playing, :class_name => 'Placement'
 
   def progress
-
-    unplayed_placements = placements.where(:state => :unplayed)
-    unplayed_placements = unplayed_placements.sort_by {|placement| placement.vote_sum}
-    unplayed_track = unplayed_placements.first
-
-    self.now_playing = unplayed_track
+    self.now_playing = up_next.first
     save!
+  end
 
+  def unvoted_placements(patron)
+    placements.includes(:votes).select do |pm|
+      pm.votes.where(patron_id: patron.id).count == 0
+    end
   end
 
   def up_next
-
-    unplayed = unplayed_placements.sort_by {|placement| placement.vote_sum}
+    unplayed_placements = placements.where(:state => :unplayed) - [now_playing]
+    unplayed = unplayed_placements.sort_by { |placement| placement.vote_sum }.reverse
     unplayed.first(4)
-
   end
 
 end

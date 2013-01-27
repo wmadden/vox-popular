@@ -13,8 +13,7 @@ class Venue::PlacementsController < VenueController
   def start_playing_track
     @playlist = Playlist.find(params[:playlist_id])
     @placement = @playlist.placements.find(params[:id])
-    @placement.start_playing_transition
-    @placement.save!
+    @placement.start_playing
 
     render nothing: true
   end
@@ -22,10 +21,9 @@ class Venue::PlacementsController < VenueController
   def finish_playing_track
     @playlist = Playlist.find(params[:playlist_id])
     @placement = @playlist.placements.find(params[:id])
-    @placement.stop_playing_transition
-    @placement.save!
-    
-    @playlist.progress
+    @placement.stop_playing
+
+    #@playlist.progress
 
     render nothing: true
   end
