@@ -1,13 +1,15 @@
-<h2>Playlist</h2>
-
-<div ng-app ng-init="playlist_id = '<%= @playlist.id %>';">
-
-  <div ng-controller="vp.patron.SuggestTrack">
-
+<div id="suggest-track-modal" class="modal hide fade"
+     ng-controller="vp.patron.SuggestTrack">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Suggest a Track</h3>
+  </div>
+  <div class="modal-body">
     <input type="text" name="search" class="track-search" autocomplete="off"
+           autofocus
+           placeholder="Track name"
            ng-model="searchQuery"
            ng-change="findTracks(searchQuery)"/>
-
     <table class="table table-striped table-bordered">
       <tbody>
       <tr ng-repeat="track in tracks">
@@ -17,50 +19,56 @@
       </tr>
       </tbody>
     </table>
-
-  </div>
-
-  <div ng-controller="vp.patron.Player">
-
-    <div class="currently-playing-track">
-      <p class="label">Now playing:</p>
-
-      <p>{{playlist.now_playing.track.title}}</p>
-
-      <p>{{playlist.now_playing.track.user.username}}</p>
-    </div>
-
-    <div class="upcoming-placements">
-      <p class="label">Upcoming:</p>
-      <table class="table table-striped table-bordered">
-        <tbody>
-        <tr ng-repeat="placement in playlist.upcoming_placements">
-          <td>
-            {{ placement.track.title }} ({{ placement.track.user.username }})
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="unvoted-placements">
-      <p class="label">Vote:</p>
-      <table class="table table-striped table-bordered">
-        <tbody>
-        <tr ng-repeat="placement in playlist.unvoted_placements">
-          <td>
-            {{ placement.track.title }} ({{ placement.track.user.username }})
-          </td>
-          <td>
-            <a href="#" class="upvote" ng-click="upvote(placement)">Upvote</a>
-          </td>
-          <td>
-            <a href="#" class="dismiss" ng-click="dismiss(placement)">Dismiss</a>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-
   </div>
 </div>
+
+<h2 class="player-section-header">Now playing</h2>
+
+<div class="currently-playing-track player-section">
+  <p class="track-title">
+    {{playlist.now_playing.track.title}}
+  </p>
+
+  <p class="artist-name">
+    {{playlist.now_playing.track.user.username}}
+  </p>
+</div>
+
+<h2 class="player-section-header">Upcoming</h2>
+
+<div class="upcoming-placements player-section">
+  <table class="table table-striped table-bordered">
+    <tbody>
+    <tr ng-repeat="placement in playlist.upcoming_placements">
+      <td>
+        {{ placement.track.title }} ({{ placement.track.user.username }})
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 class="player-section-header">Vote</h2>
+
+<div class="unvoted-placements player-section">
+  <table class="table table-striped table-bordered">
+    <tbody>
+    <tr ng-repeat="placement in playlist.unvoted_placements">
+      <td class="track-title">
+        {{ placement.track.title }} ({{ placement.track.user.username }})
+      </td>
+      <td class="track-action">
+        <a href="#" class="upvote" ng-click="upvote(placement)">
+          <i class="icon-thumbs-up"></i>
+        </a>
+      </td>
+      <td class="track-action">
+        <a href="#" class="dismiss" ng-click="dismiss(placement)">
+          <i class="icon-remove"></i>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

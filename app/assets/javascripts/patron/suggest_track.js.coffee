@@ -19,6 +19,7 @@ class vp.patron.SuggestTrack
                         }
                     }
                 })
+                $('#suggest-track-modal').modal('hide')
         })
 
 vp.patron.SuggestTrack.$inject = ['$scope', 'SoundCloud', 'PlacementResource']
