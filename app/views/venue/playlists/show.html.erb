@@ -1,4 +1,4 @@
-<h2>Event <%= params[:id] %></h2>
+<h2>Startup Live Berlin</h2>
 <script src="//connect.soundcloud.com/sdk.js"></script>
 
 <div ng-app ng-init="playlist_id = '<%= @playlist.id %>';">
@@ -8,6 +8,7 @@
       <p class="label">Now playing:</p>
 
       <p>{{playlist.now_playing.track.title}}</p>
+      <p>{{playlist.now_playing.track.duration}}</p>
 
       <p>{{playlist.now_playing.track.user.username}}</p>
       <button class="play" ng-click="play()">Play</button>
