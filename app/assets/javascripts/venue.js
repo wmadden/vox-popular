@@ -5,7 +5,5 @@
 //= require_tree ./lib
 //= require namespace
 //= require ./module
-//= require ./common/module
-//= require_tree ./common
 //= require ./venue/module
 //= require_tree ./venue
