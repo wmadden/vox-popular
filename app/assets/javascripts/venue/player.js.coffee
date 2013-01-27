@@ -81,7 +81,8 @@ class vp.venue.Player
             playlist.now_playing.soundcloudTrack.stop()
 
         next = ->
-            stop()
+            if playlist.now_playing.state == 'playing'
+                stop()
             playlist.now_playing.state = 'stopped'
             playlist.now_playing.putPlayFinished()
             refreshPlaylist().done( ->
