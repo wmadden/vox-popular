@@ -3,12 +3,7 @@ result = {
     id: @playlist.id,
 
     unvoted_placements: @unvoted_placements.map do |placement|
-      {
-          soundcloud_track_id: placement.track.sc_track_id,
-          id:                  placement.id,
-          playlist_id:         @playlist.id,
-          votes: placement.votes
-      }
+      render_placement(placement, @playlist)
     end,
 
     patron: @patron
@@ -16,13 +11,7 @@ result = {
 }
 
 if @playlist.now_playing
-  result[:now_playing] = {
-
-      playlist_id:         @playlist.id,
-      soundcloud_track_id: @playlist.now_playing.track.sc_track_id,
-      id:                  @playlist.now_playing.track.id
-
-  }
+  result[:now_playing] = render_placement(@playlist.now_playing, @playlist)
 end
 
 result
