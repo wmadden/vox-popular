@@ -2,35 +2,34 @@ namespace 'vp.venue'
 
 class vp.venue.Player
     constructor: ($scope, $http, SoundCloud, PlaylistResource, PlacementResource) ->
+        playlist = null
+
+        init = ->
+            playlist = new PlaylistResource({ id: $scope.playlist_id })
+            $scope.playlist = playlist
+            refreshPlaylist().done( -> updateView() )
 
         updateView = ->
             if !$scope.$$phase
                 $scope.$digest()
 
-        getPlaylist = =>
-            deferred = $.Deferred()
-            $scope.playlist = PlaylistResource.get(
-                { id: $scope.playlist_id },
-            (args...) ->
-                deferred.resolve(args...)
-                initialisePlaylist()
-                (args...) -> deferred.reject(args...)
-            )
-            deferred.promise()
+        initialisePlaylist = (playlist) ->
+            pendingOperations = []
 
-        initialisePlaylist = =>
-            if $scope.playlist.now_playing?
-                $scope.playlist.now_playing = new PlacementResource($scope.playlist.now_playing)
-                expandTrack($scope.playlist.now_playing).done(updateView)
+            if playlist.now_playing?
+                playlist.now_playing = new PlacementResource(playlist.now_playing)
+                pendingOperations.push( expandTrack(playlist.now_playing) )
 
             # Convert the flat objects into placement resources
-            upcoming_placements = _.map( $scope.playlist.upcoming_placements, (placement) ->
+            upcoming_placements = _.map( playlist.upcoming_placements, (placement) ->
                 placement = new PlacementResource(placement)
-                expandTrack(placement).done(updateView)
+                pendingOperations.push( expandTrack(placement) )
                 placement
             )
 
-            $scope.playlist.upcoming_placements = upcoming_placements
+            playlist.upcoming_placements = upcoming_placements
+
+            $.when.apply($, pendingOperations).promise()
 
         expandTrack = (placement) ->
             getTrack(placement.soundcloud_track_id)
@@ -48,38 +47,58 @@ class vp.venue.Player
             )
             deferred.promise()
 
+        refreshPlaylist = ->
+            deferred = $.Deferred()
+            playlist.$get(
+                ->
+                    initialisePlaylist(playlist).done( ->
+                        deferred.resolve()
+                    )
+                ,
+                (args...) ->
+                    deferred.reject(args...)
+            )
+            deferred.promise()
+
+        play = ->
+            playlist.now_playing.state = 'playing'
+            playlist.now_playing.putPlayStarted()
+
+            SoundCloud.stream(
+                '/tracks/' + playlist.now_playing.soundcloud_track_id,
+                {
+                onload: ->
+                    this.onPosition(this.duration, (eventPosition) ->
+                        next()
+                    )
+                },
+            (track) =>
+                playlist.now_playing.soundcloudTrack = track
+                playlist.now_playing.soundcloudTrack.play()
+            )
+
+        stop = ->
+            playlist.now_playing.soundcloudTrack.stop()
+
+        next = ->
+            stop()
+            playlist.now_playing.state = 'stopped'
+            playlist.now_playing.putPlayFinished()
+            refreshPlaylist().done( ->
+                play()
+                updateView()
+            )
+
         _.extend($scope, {
-            getPlaylist: -> $scope.playlist.get()
+            refreshPlaylist: -> refreshPlaylist()
 
-            play: ->
-                $scope.playlist.now_playing.state = 'playing'
-                $scope.playlist.now_playing.$putPlayStarted()
+            play: play
 
-                SoundCloud.stream(
-                    '/tracks/' + $scope.playlist.now_playing.soundcloud_track_id,
-                    {
-                        onload: ->
-                            this.onPosition(this.duration, (eventPosition) ->
-                                $scope.next()
-                            )
-                    },
-                    (track) =>
-                        $scope.playlist.now_playing.soundcloudTrack = track
-                        $scope.playlist.now_playing.soundcloudTrack.play()
-                )
+            stop: stop
 
-            stop: ->
-                $scope.playlist.now_playing.soundcloudTrack.stop()
-
-            next: ->
-                $scope.playlist.now_playing.state = 'stopped'
-                $scope.playlist.now_playing.$putPlayFinished()
-                getPlaylist().done( ->
-                    $scope.play()
-                )
-
+            next: next
         })
 
-        getPlaylist()
+        init()
 
 vp.venue.Player.$inject = ['$scope', '$http', 'SoundCloud', 'PlaylistResource', 'PlacementResource']
