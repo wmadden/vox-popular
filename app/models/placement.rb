@@ -42,4 +42,13 @@ class Placement < ActiveRecord::Base
 
   end
 
+  def vote_sum
+    result = 0
+    votes.each do |vote|
+      result += vote.value
+    end
+
+    result
+  end
+
 end
