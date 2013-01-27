@@ -1,22 +1,9 @@
 vp.venue.module
-    .factory('PlacementResource', ['$resource', ($resource) ->
+    .factory('PlacementResource', ['$resource', '$http', ($resource, $http) ->
         resource = $resource(
             '/venue/playlists/:playlist_id/placements/:id/:action',
             { playlist_id: '@playlist_id', id: '@id' },
-            {
-                putPlayStarted: {
-                    method: 'PUT',
-                    params: {
-                        action: 'start_playing_track'
-                    }
-                }
-                putPlayFinished: {
-                    method: 'PUT',
-                    params: {
-                        action: 'finish_playing_track'
-                    }
-                }
-            }
+            { } # Extra actions
         )
         _.extend( resource.prototype, {
             data: ->
@@ -25,6 +12,14 @@ vp.venue.module
                         state: this.state
                     }
                 }
+
+            putPlayStarted: ->
+                url = '/venue/playlists/' + this.playlist_id + '/placements/' + this.id + '/start_playing_track'
+                $http.put(url, {})
+
+            putPlayFinished: ->
+                url = '/venue/playlists/' + this.playlist_id + '/placements/' + this.id + '/finish_playing_track'
+                $http.put(url, {})
         })
 
         resource
