@@ -13,41 +13,31 @@ class vp.patron.Player
                 { id: $scope.playlist_id },
             (args...) ->
                 deferred.resolve(args...)
-
-                upcoming_placements = [
-                    {
-                        playlist_id: $scope.playlist_id,
-                        id: 1,
-                        soundcloud_track_id: 76523239
-                    },
-                    {
-                        playlist_id: $scope.playlist_id,
-                        id: 3,
-                        soundcloud_track_id: 76523237
-                    },
-                    {
-                        playlist_id: $scope.playlist_id,
-                        id: 4,
-                        soundcloud_track_id: 1917917
-                    },
-                ]
-
-                $scope.playlist.now_playing = new PlacementResource($scope.playlist.now_playing)
-                expandTrack($scope.playlist.now_playing).done(updateView)
-
-                # Convert the flat objects into placement resources
-                upcoming_placements = _.map( upcoming_placements, (placement) ->
-                    placement = new PlacementResource(placement)
-                    expandTrack(placement).done(updateView)
-                    placement
-                )
-
-                $scope.playlist.upcoming_placements = upcoming_placements
-                $scope.playlist.unvoted_placements = upcoming_placements
-
+                initialisePlaylist()
                 (args...) -> deferred.reject(args...)
             )
             deferred.promise()
+
+        initialisePlaylist = =>
+            if $scope.playlist.now_playing?
+                $scope.playlist.now_playing = new PlacementResource($scope.playlist.now_playing)
+                expandTrack($scope.playlist.now_playing).done(updateView)
+
+            # Convert the flat objects into placement resources
+            upcoming_placements = _.map( $scope.playlist.upcoming_placements, (placement) ->
+                placement = new PlacementResource(placement)
+                expandTrack(placement).done(updateView)
+                placement
+            )
+
+            unvoted_placements = _.map( $scope.playlist.unvoted_placements, (placement) ->
+                placement = new PlacementResource(placement)
+                expandTrack(placement).done(updateView)
+                placement
+            )
+
+            $scope.playlist.upcoming_placements = upcoming_placements
+            $scope.playlist.unvoted_placements = unvoted_placements
 
         expandTrack = (placement) ->
             getTrack(placement.soundcloud_track_id)

@@ -22,7 +22,10 @@ vp.patron.module
             data: ->
                 {
                     placement: {
-                        state: this.state
+                        state: this.state,
+                        track: {
+                            sc_track_id: this.track.soundcloud_track_id
+                        }
                     }
                 }
         })
