@@ -56,6 +56,10 @@ class vp.patron.Player
             deferred.promise()
 
         _.extend($scope, {
+            refreshPlaylist: ->
+                $scope.playlist.$get( ->
+                    initialisePlaylist()
+                )
             upvote: (placement) ->
                 placement.$upvote()
                 $scope.playlist.unvoted_placements = _.without($scope.playlist.unvoted_placements, placement)

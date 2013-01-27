@@ -10,6 +10,11 @@
   <%= javascript_include_tag "patron" %>
 
   <%= csrf_meta_tags %>
+  <script type="text/javascript">
+    $(function() {
+      $('body').scrollTop(0);
+    });
+  </script>
 </head>
 <body ng-app="vp.patron.module" ng-init="playlist_id = '<%= @playlist.id %>';">
 <div ng-controller="vp.patron.Player">
@@ -28,7 +33,7 @@
     <ul class="nav pull-right actions">
       <li>
         <a href="#" ng-click="" class="refresh-display">
-          <i class="icon-refresh"></i>
+          <i class="icon-refresh" ng-click="refreshPlaylist()"></i>
         </a>
       </li>
       <li>
